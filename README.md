@@ -81,7 +81,7 @@ Recorder:
 #### Option 1: Using the Start Script (Recommended for Background Operation)
 
 ```bash
-./start_NSR.sh
+./start_network_state_recorder.sh
 ```
 
 This runs NSR in the background using `nohup`, allowing you to close the terminal while NSR continues running.
@@ -89,17 +89,17 @@ This runs NSR in the background using `nohup`, allowing you to close the termina
 #### Option 2: Running Directly (Foreground)
 
 ```bash
-python3 NSR.py
+python3 network_state_recorder.py
 ```
 
 This runs NSR in the foreground. Useful for debugging and monitoring real-time logs.
 
 ### Stopping NSR
 
-#### Option 1: Using the Close Script
+#### Option 1: Using the Stop Script
 
 ```bash
-./close_NSR.sh
+./stop_network_state_recorder.sh
 ```
 
 This script finds the NSR process and sends a graceful termination signal (SIGTERM).
@@ -112,7 +112,7 @@ If running in background:
 
 ```bash
 # Find the process ID
-pgrep -f NSR.py
+pgrep -f network_state_recorder.py
 
 # Send termination signal
 kill -15 <PID>
@@ -123,7 +123,7 @@ kill -15 <PID>
 To verify if NSR is running:
 
 ```bash
-pgrep -f NSR.py
+pgrep -f network_state_recorder.py
 ```
 
 If a process ID is returned, NSR is running.
@@ -213,21 +213,21 @@ logs/NSR_YYYY-MM-DD.log
 
 **Solution**:
 ```bash
-chmod +x start_NSR.sh close_NSR.sh
+chmod +x start_network_state_recorder.sh stop_network_state_recorder.sh
 ```
 
-#### 4. Cannot Stop NSR with close_NSR.sh
+#### 4. Cannot Stop NSR with stop_network_state_recorder.sh
 
 **Cause**: May require sudo privileges.
 
 **Solution**:
 ```bash
-sudo ./close_NSR.sh
+sudo ./stop_network_state_recorder.sh
 ```
 
 Or manually:
 ```bash
-sudo kill -15 $(pgrep -f NSR.py)
+sudo kill -15 $(pgrep -f network_state_recorder.py)
 ```
 
 #### 5. High Disk Usage

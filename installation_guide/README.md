@@ -27,7 +27,7 @@ pip install nornir loguru orjson requests
 ### Step 2: Make Scripts Executable
 
 ```bash
-chmod +x start_NSR.sh close_NSR.sh
+chmod +x start_network_state_recorder.sh stop_network_state_recorder.sh
 ```
 
 ### Step 3: Verify Installation
@@ -35,7 +35,7 @@ chmod +x start_NSR.sh close_NSR.sh
 Ensure NDTwin server is running, then test the configuration:
 
 ```bash
-python3 NSR.py
+python3 network_state_recorder.py
 ```
 
 Press `Ctrl+C` to stop if running successfully.

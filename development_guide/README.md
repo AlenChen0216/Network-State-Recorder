@@ -80,7 +80,7 @@ NSR follows a **multi-threaded producer-consumer pattern** with the following co
 ## Code Structure
 
 ```
-NSR.py
+network_state_recorder.py
 ├── Imports & License Header
 ├── Global Constants
 │   ├── FLOWINFO_URL, GRAPHINFO_URL    # API endpoints
@@ -507,7 +507,7 @@ Recorder:
 
 ```bash
 # Start NSR
-python3 NSR.py &
+python3 network_state_recorder.py &
 
 # Wait for some data collection
 sleep 30
