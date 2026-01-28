@@ -18,19 +18,25 @@
   
 ## Installation
 
-### Step 1: Install Python Dependencies
+### Step 1: Clone our NSR
+
+```bash
+git clone https://github.com/ndtwin-lab/Network-State-Recorder.git
+```
+
+### Step 2: Install Python Dependencies
 
 ```bash
 pip install nornir loguru orjson requests
 ```
 
-### Step 2: Make Scripts Executable
+### Step 3: Make Scripts Executable
 
 ```bash
 chmod +x start_network_state_recorder.sh stop_network_state_recorder.sh
 ```
 
-### Step 3: Verify Installation
+### Step 4: Verify Installation
 
 Ensure NDTwin server is running, then test the configuration:
 
@@ -39,4 +45,3 @@ python3 network_state_recorder.py
 ```
 
 Press `Ctrl+C` to stop if running successfully.
-
