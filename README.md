@@ -62,7 +62,7 @@ Recorder:
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `ndtwin_kernel` | string | `http://127.0.0.1:8000` | URL of the NDTwin server |
+| `ndtwin_kernel` | string | `http://127.0.0.1:8000` | URL of the NDTwin kernel |
 | `request_interval` | integer | `5` | How often to fetch data from NDTwin (seconds) |
 | `storage_interval` | integer | `2` | How often to rotate and compress JSON files (minutes) |
 | `display_on_console` | boolean | `true` | Enable real-time logging output to console. Set to `false` to log only to files in `logs/` directory |
