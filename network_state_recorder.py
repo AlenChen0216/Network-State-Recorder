@@ -15,6 +15,7 @@ import os
 from concurrent.futures import ProcessPoolExecutor
 import zipfile
 import signal
+import argparse
 
 FLOWINFO_URL = "/ndt/get_detected_flow_data"
 
@@ -228,7 +229,7 @@ def ndtwin_alive()->bool:
         print(f"Error checking NDTwin server status: {e}")
         return False
 
-def logger_config(level:str="DEBUG"):
+def logger_config(level:str="DEBUG", real_time:bool=True):
     """
     Configure the loguru logger with file rotation and formatting.
     
@@ -236,19 +237,20 @@ def logger_config(level:str="DEBUG"):
     
     Args:
         level (str): The minimum logging level to capture (e.g., 'DEBUG', 'INFO', 'WARNING'). Defaults to 'DEBUG'.
+        real_time (bool): Whether to enable real-time logging output. Defaults to True.
     """
     logger.remove(0)
     logger.add(
-        "logs/NSR_{time:YYYY-MM-DD}.log",
+        sink = (sys.stdout if real_time else "logs/NSR_{time:YYYY-MM-DD}.log"),
         format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level} : {message}</level>",
         colorize=True,
         backtrace=True,
         diagnose=True,
-        rotation="1 day",
+        rotation= (None if real_time else "1 day"),
         level = level
     )
 
-def start():
+def start(real_time=True):
     """
     Initialize and start the NSR (Network State Recorder) application.
     
@@ -265,7 +267,7 @@ def start():
     try:
         # config
         if config.inventory.hosts.get("Recorder") is not None:
-            logger_config(level=config.inventory.hosts["Recorder"].data.get("log_level","INFO"))
+            logger_config(level=config.inventory.hosts["Recorder"].data.get("log_level","INFO"), real_time=real_time)
             ndtwin_kernel = config.inventory.hosts["Recorder"].data.get("ndtwin_kernel","http://127.0.0.1:8000")
             FLOWINFO_URL = ndtwin_kernel + FLOWINFO_URL
             GRAPHINFO_URL = ndtwin_kernel + GRAPHINFO_URL
@@ -313,8 +315,12 @@ def start():
 
 
 if __name__ == '__main__':
+    pargs = argparse.ArgumentParser(description="Network State Recorder (NSR)")
+    pargs.add_argument('real-time', type=bool, default='True', help='Real-time monitoring or not')
+    args = pargs.parse_args()
+
     signal.signal(signal.SIGINT, lambda s, f: terminate())
     signal.signal(signal.SIGTERM, lambda s, f: terminate())
-    start()
+    start(real_time=args.real_time)
     while True:
-        time.sleep(10)
+        time.sleep(1)
